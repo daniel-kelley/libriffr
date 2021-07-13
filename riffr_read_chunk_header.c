@@ -13,12 +13,18 @@ int riffr_read_chunk_header(struct riffr *handle,
 
 {
     int err = -1;
+    int rc;
 
     do {
         if (!handle || !header) {
             break;
         }
-        err = riffr_read_data(handle, "DD", sizeof(*header), header);
+        rc = riffr_read_data(handle, "DD", sizeof(*header), header);
+        if (rc < 0) {
+            err = rc;
+        } else if (rc > 0) {
+            err = 0;
+        }
     } while (0);
 
     return err;
