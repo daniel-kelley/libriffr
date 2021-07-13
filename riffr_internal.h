@@ -19,6 +19,7 @@
 /* handle */
 struct riffr {
     struct riffr_chunk_type form;
+    const char *filename;
     FILE *f;
     uint16_t (*r16)(uint16_t);
     uint32_t (*r32)(uint32_t);

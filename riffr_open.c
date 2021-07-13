@@ -26,6 +26,7 @@ static uint32_t riffr_le32toh(uint32_t data)
 static int riffr_valid(struct riffr *handle)
 {
     int err = -1;
+    int rc = 0;
     struct riffr_chunk_header riff_header;
     uint32_t form_id;
 
@@ -52,11 +53,12 @@ static int riffr_valid(struct riffr *handle)
             break;
         }
 
-        err = riffr_read_data(handle,
-                              "D",
-                              sizeof(form_id),
-                              &form_id);
-        if (err) {
+        rc = riffr_read_data(handle,
+                             "D",
+                             sizeof(form_id),
+                             &form_id);
+        if (rc < 0) {
+            err = rc;
             break;
         }
 
@@ -75,6 +77,7 @@ static int riffr_open_internal(struct riffr *handle,
     int err = -1;
 
     handle->f = fopen(filename, mode);
+    handle->filename = filename;
     if (handle->f) {
         err = riffr_valid(handle);
     } else {
