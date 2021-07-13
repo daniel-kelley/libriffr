@@ -35,13 +35,14 @@ extern int riffr_read_chunk_header(struct riffr *handle,
 extern int riffr_read_chunk_body(struct riffr *handle,
                                  size_t size,
                                  void *buffer);
-extern int riffr_read_dword(struct riffr *handle,
-                            size_t count,
-                            uint32_t *buffer);
 extern int riffr_get_chunk_type(struct riffr *handle,
                                 uint32_t chunk_id,
                                 struct riffr_chunk_type *chunk_type);
 extern int riffr_close(struct riffr *handle);
+extern int riffr_read_data(struct riffr *handle,
+                           const char *format,
+                           size_t length,
+                           void *buffer);
 
 #define riffr_type_str(form) ((form).str)
 

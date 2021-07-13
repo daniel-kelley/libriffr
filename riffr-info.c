@@ -37,7 +37,9 @@ static void riffr_info(const char *file)
             printf("%s: %u\n", str, header.size);
             if (!strcmp(str, "LIST")) {
                 /* LIST contains a type and is nested with more chunks. */
-                err = riffr_read_dword(handle, 1, &list_form);
+                err = riffr_read_data(handle,
+                                      "D",
+                                      sizeof(list_form), &list_form);
                 if (!err) {
                     err = riffr_get_chunk_type(handle, list_form, &type);
                     if (err) {

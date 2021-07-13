@@ -20,6 +20,8 @@
 struct riffr {
     struct riffr_chunk_type form;
     FILE *f;
+    uint16_t (*r16)(uint16_t);
+    uint32_t (*r32)(uint32_t);
 };
 
 #endif /* RIFFR_INTERNAL_H_ */
