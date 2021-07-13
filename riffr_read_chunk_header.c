@@ -18,7 +18,7 @@ int riffr_read_chunk_header(struct riffr *handle,
         if (!handle || !header) {
             break;
         }
-        err = riffr_read_dword(handle, 2, &header->id);
+        err = riffr_read_data(handle, "DD", sizeof(*header), header);
     } while (0);
 
     return err;

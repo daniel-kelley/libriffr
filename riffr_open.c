@@ -5,13 +5,24 @@
 
 */
 
+#define _DEFAULT_SOURCE
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <endian.h>
 #include "riffr_internal.h"
 
-/*  */
+static uint16_t riffr_le16toh(uint16_t data)
+{
+    return le16toh(data);
+}
+
+static uint32_t riffr_le32toh(uint32_t data)
+{
+    return le32toh(data);
+}
+
 static int riffr_valid(struct riffr *handle)
 {
     int err = -1;
@@ -19,20 +30,32 @@ static int riffr_valid(struct riffr *handle)
     uint32_t form_id;
 
     do {
+        /* Little bit of a chicken and egg problem. Start with this for now. */
+#if __BYTE_ORDER == __LITTLE_ENDIAN
+        handle->r16 = riffr_le16toh;
+        handle->r32 = riffr_le32toh;
+#elif __BYTE_ORDER == __BIG_ENDIAN
+        handle->r16 = riffr_be16toh;
+        handle->r32 = riffr_be32toh;
+#else
+#error "Needs endian support"
+#endif
+
         err = riffr_read_chunk_header(handle, &riff_header);
         if (err) {
             break;
         }
 
-        /* TODO: handle host/target endianness. */
+        /* TODO: handle target endianness. */
         err = (riff_header.id != RIFFR_RIFF_TAG);
         if (err) {
             break;
         }
 
-        err = riffr_read_dword(handle,
-                               1,
-                               &form_id);
+        err = riffr_read_data(handle,
+                              "D",
+                              sizeof(form_id),
+                              &form_id);
         if (err) {
             break;
         }

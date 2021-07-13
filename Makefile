@@ -44,7 +44,7 @@ RIFFRLIB_SRC += riffr_close.c
 RIFFRLIB_SRC += riffr_read_chunk_header.c
 RIFFRLIB_SRC += riffr_read_chunk_body.c
 RIFFRLIB_SRC += riffr_get_chunk_type.c
-RIFFRLIB_SRC += riffr_read_dword.c
+RIFFRLIB_SRC += riffr_read_data.c
 
 
 RIFFRLIB_LDLIBS :=
