@@ -10,4 +10,4 @@ License: MIT
 
   https://spdx.org/licenses/MIT.html
 
-![Build Status](https://github.com/daniel-kelley/libriffr/workflows/CI-main/badge.svg)
+![Build Status](https://github.com/daniel-kelley/libriffr/workflows/Build/badge.svg)
