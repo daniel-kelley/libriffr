@@ -9,3 +9,5 @@ Current limitations:
 License: MIT
 
   https://spdx.org/licenses/MIT.html
+
+![Build Status](https://github.com/daniel-kelley/libriffr/.github/workflows/main.yml/badge.svg)
