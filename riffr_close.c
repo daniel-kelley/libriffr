@@ -7,7 +7,6 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <sndfile.h>
 #include "riffr_internal.h"
 
 int riffr_close(struct riffr *handle)
