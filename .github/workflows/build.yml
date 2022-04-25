@@ -13,5 +13,27 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: prep
+      run: |
+        sudo apt-get install csound
+        sudo apt-get install csound-utils
+        sudo apt-get install clang-tools
+        sudo apt-get install valgrind
     - name: make
       run: make
+    - name: make check
+      run: |
+        make clean
+        make SANITIZE=address check
+    - name: make check clang
+      run: |
+        make clean
+        make CC=clang SANITIZE=address check
+    - name: make check valgrind
+      run: |
+        make clean
+        make CHECKER=valgrind check
+    - name: scan-build make
+      run: |
+        make clean
+        scan-build make
