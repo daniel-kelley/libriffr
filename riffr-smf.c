@@ -44,7 +44,7 @@ static void dump_chunk(const unsigned char *chunk, size_t chunk_size)
     unsigned int c;
     unsigned int cx;
     unsigned long long t = 0;
-    int len;
+    int len = 0;
     size_t count = 0;
 
     while (count < chunk_size) {
