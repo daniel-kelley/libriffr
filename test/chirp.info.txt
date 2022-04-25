@@ -1,0 +1,9 @@
+chirp.wav: WAVE
+fmt : 16
+wFormatTag: 0x1
+nChannels: 1
+nSamplesPerSec: 48000
+nAvgBytesPerSec: 96000
+nBlockAlign: 2
+wBitsPerSample: 16
+data: 191994

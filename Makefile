@@ -84,6 +84,16 @@ $(SHLIBRARY_VER): $(RIFFRLIB_OBJ)
 	$(CC) -shared -Wl,-soname,$@ -o $@ \
 		$(LDFLAGS) $(RIFFRLIB_LDLIBS) $(RIFFRLIB_OBJ)
 
+chirp.wav: test/chirp.csd
+	csound $<
+
+check: $(PROG) chirp.wav
+	LD_LIBRARY_PATH=. ldd ./riffr-info
+	LD_LIBRARY_PATH=. $(CHECKER) ./riffr-info chirp.wav > chirp.info.txt
+	LD_LIBRARY_PATH=. $(CHECKER) ./riffr-smf test/output.midi > output.midi.txt
+	cmp chirp.info.txt test/chirp.info.txt
+	cmp output.midi.txt test/output.midi.txt
+
 install: $(PROG) $(SHLIBRARY) $(LIBRARY)
 	install -p -m 755 riffr.h $(PREFIX)/include
 	install -p -m 755 $(PROG) $(PREFIX)/bin
@@ -94,6 +104,7 @@ uninstall:
 	-rm -f $(PREFIX)/bin/$(PROG) $(PREFIX)/include/riffr.h
 
 clean:
-	-rm -f $(PROG) $(SHLIBRARY) $(SHLIBRARY_VER) $(LIBRARY) $(OBJ) $(DEP)
+	-rm -f $(PROG) $(SHLIBRARY) $(SHLIBRARY_VER) $(LIBRARY) \
+		$(OBJ) $(DEP) chirp.wav chirp.info.txt output.midi.txt
 
 -include $(DEP)
