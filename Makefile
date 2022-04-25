@@ -31,8 +31,14 @@ RIFFRINFO_DEP := $(RIFFRINFO_SRC:%.c=%.d)
 OBJ := $(RIFFRINFO_OBJ)
 DEP := $(RIFFRINFO_DEP)
 
+RIFFRSMF_SRC := riffr-smf.c
+RIFFRSMF_OBJ := $(RIFFRSMF_SRC:%.c=%.o)
+RIFFRSMF_DEP := $(RIFFRSMF_SRC:%.c=%.d)
+OBJ += $(RIFFRSMF_OBJ)
+DEP += $(RIFFRSMF_DEP)
+
 LIBMAJOR := 0
-LIBMINOR := 1
+LIBMINOR := 2
 
 LIBNAME := libriffr
 LIBRARY := $(LIBNAME).a
@@ -40,6 +46,9 @@ SHLIBRARY := $(LIBNAME).so
 SHLIBRARY_VER := $(LIBNAME)-$(LIBMAJOR).$(LIBMINOR).so
 
 RIFFRLIB_SRC := riffr_open.c
+RIFFRLIB_SRC += riffr_valid.c
+RIFFRLIB_SRC += riffr_open_internal.c
+RIFFRLIB_SRC += riffr_open_smf.c
 RIFFRLIB_SRC += riffr_close.c
 RIFFRLIB_SRC += riffr_read_chunk_header.c
 RIFFRLIB_SRC += riffr_read_chunk_body.c
@@ -55,12 +64,15 @@ OBJ += $(RIFFRLIB_OBJ)
 DEP += $(RIFFRLIB_DEP)
 
 PROG := riffr-info
+PROG += riffr-smf
 
 .PHONY: all install uninstall clean
 
 all: $(PROG) $(LIBRARY) $(SHLIBRARY)
 
 riffr-info: $(RIFFRINFO_SRC) $(SHLIBRARY)
+
+riffr-smf: $(RIFFRSMF_SRC) $(SHLIBRARY)
 
 $(LIBRARY): $(RIFFRLIB_OBJ)
 	$(AR) cr $@ $^

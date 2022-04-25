@@ -14,15 +14,40 @@
 #include <inttypes.h>
 #include "riffr.h"
 
-#define RIFFR_RIFF_TAG 0x46464952
+#define RIFFR_RIFF_TAG 0x46464952  /* RIFF (LE) */
+#define RIFFR_MTHD_TAG 0x4D546864  /* MThd (BE) */
 
 /* handle */
 struct riffr {
-    struct riffr_chunk_type form;
+    struct riffr_chunk_header header;
+    union {
+        struct {
+            struct riffr_chunk_type form;
+        } riff;
+        struct {
+            uint16_t format;
+            uint16_t tracks;
+            uint16_t division;
+        } smf;
+    } u;
     const char *filename;
     FILE *f;
     uint16_t (*r16)(uint16_t);
     uint32_t (*r32)(uint32_t);
+    int (*type2str)(char *s, size_t len, uint32_t id);
 };
+
+enum file_endianness {
+    ENDIAN_ALWAYS_BE,
+    ENDIAN_ALWAYS_LE,
+    ENDIAN_HOST
+};
+
+extern int riffr_open_internal(struct riffr *handle,
+                               const char *filename,
+                               const char *mode,
+                               enum file_endianness endianness);
+
+extern int riffr_valid(struct riffr *handle, uint32_t tag);
 
 #endif /* RIFFR_INTERNAL_H_ */

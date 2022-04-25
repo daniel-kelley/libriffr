@@ -69,4 +69,6 @@ extern const char *riffr_filename(const struct riffr *handle);
 
 #define riffr_type_str(form) ((form).str)
 
+extern struct riffr *riffr_open_smf(const char *filename, const char *mode);
+
 #endif /* RIFFR_H_ */
