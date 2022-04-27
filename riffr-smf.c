@@ -143,13 +143,16 @@ static int show_chunk(struct riffr *handle,
     return err;
 }
 
-static void riffr_smf_dump(struct riffr *handle)
+static void riffr_smf_dump(struct riffr *handle, struct riffr_smf_header *smf)
 {
     struct riffr_chunk_header header;
     unsigned char *body = NULL;
     size_t body_size = 0;
     int err = -1;
 
+    printf("format: %u\n", smf->format);
+    printf("tracks: %u\n", smf->tracks);
+    printf("division: %u\n", smf->division);
     for (;;) {
         err = riffr_read_chunk_header(handle, &header);
         if (err) {
@@ -168,10 +171,11 @@ static void riffr_smf_dump(struct riffr *handle)
 static void riffr_smf(const char *file)
 {
     struct riffr *handle;
+    struct riffr_smf_header smf;
 
-    handle = riffr_open_smf(file, "r");
+    handle = riffr_open_smf(file, "r", &smf);
     if (handle) {
-        riffr_smf_dump(handle);
+        riffr_smf_dump(handle, &smf);
     } else {
         fprintf(stderr, "%s: %s\n", file, strerror(errno));
     }

@@ -24,11 +24,7 @@ struct riffr {
         struct {
             struct riffr_chunk_type form;
         } riff;
-        struct {
-            uint16_t format;
-            uint16_t tracks;
-            uint16_t division;
-        } smf;
+        struct riffr_smf_header smf;
     } u;
     const char *filename;
     FILE *f;
