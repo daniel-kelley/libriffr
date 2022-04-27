@@ -20,6 +20,12 @@ struct riffr_chunk_header {
     uint32_t size;              /* Size in bytes */
 };
 
+struct riffr_smf_header {
+    uint16_t format;
+    uint16_t tracks;
+    uint16_t division;
+};
+
 #define RIFFR_TYPE_LEN 5 /* 4 chars plus trailing NUL */
 
 struct riffr_chunk_type {
@@ -69,6 +75,8 @@ extern const char *riffr_filename(const struct riffr *handle);
 
 #define riffr_type_str(form) ((form).str)
 
-extern struct riffr *riffr_open_smf(const char *filename, const char *mode);
+extern struct riffr *riffr_open_smf(const char *filename,
+                                    const char *mode,
+                                    struct riffr_smf_header *smf_header);
 
 #endif /* RIFFR_H_ */

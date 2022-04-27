@@ -8,7 +8,9 @@
 #include <stdlib.h>
 #include "riffr_internal.h"
 
-struct riffr *riffr_open_smf(const char *filename, const char *mode)
+struct riffr *riffr_open_smf(const char *filename,
+                             const char *mode,
+                             struct riffr_smf_header *smf_header)
 {
     struct riffr *handle = NULL;
     int err = -1;
@@ -40,6 +42,10 @@ struct riffr *riffr_open_smf(const char *filename, const char *mode)
                               &handle->u.smf);
         if (err <= 0) {
             break;
+        }
+
+        if (smf_header) {
+            *smf_header = handle->u.smf;
         }
 
         err = 0;
