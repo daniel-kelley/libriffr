@@ -10,6 +10,10 @@
 #ifndef   RIFFR_H_
 #define   RIFFR_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdio.h>
 #include <inttypes.h>
 
@@ -78,5 +82,9 @@ extern const char *riffr_filename(const struct riffr *handle);
 extern struct riffr *riffr_open_smf(const char *filename,
                                     const char *mode,
                                     struct riffr_smf_header *smf_header);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* RIFFR_H_ */
