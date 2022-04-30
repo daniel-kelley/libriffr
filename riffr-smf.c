@@ -70,7 +70,8 @@ static void dump_chunk(const unsigned char *chunk, size_t chunk_size)
             } else if (cx == 0xc0 || cx == 0xd0) {
                 state = DATA;
                 len = 1;
-            } else if (cx == 0x80 || cx == 0x90 || cx == 0xa0 || cx == 0xe0) {
+            } else if (cx == 0x80 || cx == 0x90 ||
+                       cx == 0xa0 || cx == 0xb0 || cx == 0xe0) {
                 state = DATA;
                 len = 2;
             } else if (cx == 0xf0) {
